@@ -4,10 +4,12 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Repository, Equal } from 'typeorm';
 import { User } from './entities/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CustomLogger } from 'src/shared/services/custom-logger.service';
 @Injectable()
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    private readonly logger: CustomLogger,
   ) {}
   async create(createUserDto: CreateUserDto): Promise<boolean | User> {
     const existingUser = await this.findOne(createUserDto.id);
@@ -40,7 +42,7 @@ export class UserService {
       if (!user) return null;
       return user;
     } catch (error) {
-      // this.logger.error(`findOne ->${error}`, 'user.service.ts');
+      this.logger.error(`findOne ->${error}`, 'user.service.ts');
     }
   }
 
@@ -109,7 +111,7 @@ export class UserService {
       }
       return users;
     } catch (error) {
-      // this.logger.error(`getOnlineUserCount ->${error}`, 'user.service.ts');
+      this.logger.error(`getOnlineUserCount ->${error}`, 'user.service.ts');
     }
   }
 }
