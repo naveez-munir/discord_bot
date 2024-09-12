@@ -7,6 +7,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import typeorm from 'config/typeorm';
 import { GatewayIntentBits } from 'discord.js';
+import { ChannelsModule } from './channels/channels.module';
+import { WorkspaceModule } from './workspace/workspace.module';
+import { UserWorkspaceModule } from './user-workspace/user-workspace.module';
 
 @Module({
   imports: [
@@ -35,6 +38,9 @@ import { GatewayIntentBits } from 'discord.js';
       inject: [ConfigService],
     }),
     UserModule,
+    ChannelsModule,
+    WorkspaceModule,
+    UserWorkspaceModule,
   ],
   controllers: [AppController],
   providers: [AppService],

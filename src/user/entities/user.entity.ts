@@ -7,6 +7,8 @@ import {
   OneToMany,
   OneToOne,
 } from 'typeorm';
+
+import { UserWorkspace } from '../../user-workspace/entities/user-workspace.entity';
 @Entity('users')
 export class User {
   @PrimaryColumn('varchar')
@@ -35,4 +37,7 @@ export class User {
 
   @UpdateDateColumn()
   updated_at: Date;
+
+  @OneToMany(() => UserWorkspace, (userWorkspace) => userWorkspace.user)
+  workspaces: UserWorkspace[];
 }
